@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply h-screen font-sans;
+}
+
+#app {
+  @apply flex flex-col h-full w-full;
+}

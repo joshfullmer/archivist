@@ -1,23 +1,22 @@
 <template>
-  <div class="app">
-    <PageHeader @toggle-nav="toggleNav" />
-    <div class="content">
-      <PageNav v-if="showNav" />
-      <PageMain />
-    </div>
+  <PageHeader @toggle-nav="toggleNav" />
+  <div class="content">
+    <MainNav :open="showNav" />
+
+    <PageMain />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import PageHeader from './components/PageHeader.vue'
-import PageNav from './components/PageNav.vue'
-import PageMain from './components/PageMain.vue'
+import PageHeader from './components/app/PageHeader.vue'
+import MainNav from './components/app/MainNav.vue'
+import PageMain from './components/app/PageMain.vue'
 
 export default defineComponent({
   name: 'App',
-  components: { PageHeader, PageNav, PageMain },
+  components: { PageHeader, MainNav, PageMain },
   setup () {
     const showNav = ref(true)
     const toggleNav = () => { showNav.value = !showNav.value }
@@ -31,11 +30,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-  .app {
-    @apply h-screen font-sans;
-  }
-
   .content {
-    @apply h-full flex;
+    @apply flex flex-1 overflow-hidden;
   }
 </style>

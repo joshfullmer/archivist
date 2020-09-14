@@ -1,18 +1,27 @@
 <template>
-  <router-link :to="to" class="book-container">
+  <router-link
+    :to="to"
+    class="book-container"
+  >
     <div class="book">
       <div class="back" />
       <div class="page page6" />
       <div class="page page5" />
       <div class="page page4">
-        <span class="title">{{ book.title }}</span>
+        <span
+          class="title"
+          :title="book.title"
+        >{{ book.title }}</span>
       </div>
       <div class="page page3" />
       <div class="page page2" />
       <div class="page page1" />
       <div class="front">
-        <span class="title">{{ book.title }}</span>
-        <em class="word-count">{{ book.wordCount }} words</em>
+        <span
+          class="title"
+          :title="book.title"
+        >{{ book.title }}</span>
+        <!-- <em class="word-count">{{ book.wordCount }} words</em> -->
       </div>
     </div>
   </router-link>
@@ -31,7 +40,8 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const to = `/books/${props.book.id}`
+    const to = { name: 'book.edit', params: { id: props.book.id } }
+
     return { to }
   }
 })
@@ -39,11 +49,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .title {
-    @apply font-semibold antialiased;
+    @apply px-2 w-full text-center font-semibold truncate;
   }
 
   .book {
-    @apply relative h-64 flex items-end;
+    @apply relative h-64;
     transform-style: preserve-3d;
     backface-visibility: visible;
   }
@@ -56,11 +66,7 @@ export default defineComponent({
   }
 
   .front {
-    @apply flex flex-col items-center font-serif pt-4;
-
-    .title {
-      @apply flex-1;
-    }
+    @apply flex flex-col items-center justify-between font-serif pt-4;
 
     .word-count {
       @apply text-xs font-light;
@@ -72,33 +78,35 @@ export default defineComponent({
   }
 
   .book-container {
+    width: 32%;
+
     &:nth-child(5n + 1) {
       .front, .back {
-        @apply bg-gradient-to-tl from-indigo-400 via-indigo-300 to-teal-300;
+        @apply bg-gradient-to-tl from-indigo-300 via-indigo-200 to-teal-300;
       }
     }
 
     &:nth-child(5n + 2) {
       .front, .back {
-        @apply bg-gradient-to-tl from-pink-400 via-red-400 to-orange-400;
+        @apply bg-gradient-to-tl from-pink-300 via-red-300 to-orange-300;
       }
     }
 
     &:nth-child(5n + 3) {
       .front, .back {
-        @apply bg-gradient-to-tl from-green-300 via-green-300 to-yellow-300;
+        @apply bg-gradient-to-tl from-green-300 via-green-200 to-yellow-300;
       }
     }
 
     &:nth-child(5n + 4) {
       .front, .back {
-        @apply bg-gradient-to-tl from-yellow-500 via-yellow-400 to-orange-300;
+        @apply bg-gradient-to-tl from-yellow-300 via-orange-200 to-orange-300;
       }
     }
 
     &:nth-child(5n) {
       .front, .back {
-        @apply bg-yellow-600 border border-yellow-800;
+        @apply bg-gradient-to-tl from-blue-400 via-blue-200 to-gray-300;
       }
     }
   }
@@ -121,39 +129,39 @@ export default defineComponent({
 
   .book:hover {
     .front, .page {
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2);
+      box-shadow: 0 .5em 1em 0 rgba(0, 0, 0, .2);
     }
 
     .front {
-      transform: rotateY(-175deg);
-    }
-
-    .page1 {
       transform: rotateY(-170deg);
     }
 
-    .page2 {
-      transform: rotateY(-165deg);
-    }
-
-    .page3 {
+    .page1 {
       transform: rotateY(-160deg);
     }
 
+    .page2 {
+      transform: rotateY(-155deg);
+    }
+
+    .page3 {
+      transform: rotateY(-150deg);
+    }
+
     .page4 {
-      transform: rotateY(-20deg);
+      transform: rotateY(-16deg);
     }
 
     .page5 {
-      transform: rotateY(-15deg);
+      transform: rotateY(-12deg);
     }
 
     .page6 {
-      transform: rotateY(-10deg);
+      transform: rotateY(-8deg);
     }
 
     .back {
-      transform: rotateY(-5deg);
+      transform: rotateY(-4deg);
     }
   }
 </style>

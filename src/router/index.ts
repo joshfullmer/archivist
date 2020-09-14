@@ -2,28 +2,45 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import BooksPage from '../views/BooksPage.vue'
 import BookPage from '../views/BookPage.vue'
-import Characters from '../views/Characters.vue'
+import ChapterPage from '../views/ChapterPage.vue'
+import ComponentsPage from '../views/ComponentsPage.vue'
+import ComponentPage from '../views/ComponentPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
     path: '/books',
-    name: 'Books',
+    name: 'books',
     component: BooksPage
   },
   {
-    path: '/books/:id',
-    name: 'Book',
+    path: '/books/new',
+    name: 'book.new',
     component: BookPage
   },
   {
-    path: '/characters',
-    name: 'Characters',
-    component: Characters
+    path: '/books/:id',
+    name: 'book.edit',
+    component: BookPage
+  },
+  {
+    path: '/chapter/:id',
+    name: 'chapter.edit',
+    component: ChapterPage
+  },
+  {
+    path: '/components',
+    name: 'components',
+    component: ComponentsPage
+  },
+  {
+    path: '/components/:id',
+    name: 'component',
+    component: ComponentPage
   }
   // {
   //   path: '/about',
