@@ -1,5 +1,6 @@
 <template>
   <section class="component-page">
+    <pre>{{ component }}</pre>
     <header class="component-page-header">
       <EditableField
         v-model="component.name"
@@ -8,39 +9,77 @@
         resize
         @input="updateComponent"
       />
-
-      <IconButton
-        name="plus-circle"
-        @click="isAddComponentFieldModalOpen = true"
-      />
     </header>
 
-    <table class="component-data">
+    <table class="component-table">
       <thead>
         <tr>
+          <th />
+          <th>
+            Name
+          </th>
           <th
             v-for="field in component.fields"
             :key="field.id"
+            class="group"
           >
-            {{ field.name }}
+            <div class="component-header">
+              <span>{{ field.name }}</span>
+
+              <div class="transition duration-200 opacity-0 group-hover:opacity-100">
+                <IconButton
+                  name="trash"
+                  color="red-600"
+                />
+              </div>
+            </div>
+          </th>
+          <th>
+            <IconButton
+              name="plus-circle"
+              @click="isAddComponentFieldModalOpen = true"
+            />
           </th>
         </tr>
       </thead>
 
       <tbody>
         <tr
-          v-for="{ data, id } in component.data"
+          v-for="{ values, name, id } in component.records"
           :key="id"
+          class="group"
         >
+          <td>
+            <!-- TODO: Implement reordering -->
+            <IconButton name="dots-vertical" />
+          </td>
+
+          <td>
+            TODO: Implement field for adding record name
+            {{ name }}
+          </td>
+
           <td
             v-for="field in component.fields"
             :key="field.id"
+            class="component-data"
           >
-            <input
+            TODO: Implement editing data
+            {{ values }}
+            <!-- <input
               v-model="data[field.name]"
               class="row-input"
               @input="updateComponentData(id, data)"
-            >
+            > -->
+          </td>
+
+          <td>
+            <div class="transition duration-200 opacity-0 group-hover:opacity-100">
+              <IconButton
+                name="trash"
+                color="red-600"
+              />
+            </div>
           </td>
         </tr>
       </tbody>
@@ -50,7 +89,7 @@
     <FilledButton
       with-icon
       class="add-row-button"
-      @click="createComponentData"
+      @click="createComponentRecord"
     >
       <Icon
         name="plus"
@@ -75,7 +114,7 @@ import debounce from 'lodash.debounce'
 import AddComponentFieldModal from '../components/AddComponentFieldModal.vue'
 import { BookComponent, Data, BookComponentField } from '@/types'
 import router from '@/router'
-import { getComponentById, updateComponentMutation, createComponentDataMutation } from '@/api'
+import { getComponentById, updateComponentMutation, createComponentRecordMutation } from '@/api'
 import { updateComponentDataMutation } from '@/api/components'
 import { INPUT_DELAY } from '@/constants/delays'
 
@@ -95,10 +134,10 @@ export default defineComponent({
       component.value.fields.push(componentField)
     }
 
-    const createComponentData = async () => {
-      const componentData = await createComponentDataMutation({ componentId: component.value.id })
+    const createComponentRecord = async () => {
+      const componentRecord = await createComponentRecordMutation({ componentId: component.value.id })
 
-      component.value.data.push(componentData)
+      component.value.records.push(componentRecord)
     }
 
     const updateComponentData = debounce((id: string, componentData: Data) => {
@@ -112,7 +151,7 @@ export default defineComponent({
     return {
       addComponentField,
       component,
-      createComponentData,
+      createComponentRecord,
       isAddComponentFieldModalOpen,
       updateComponent,
       updateComponentData
@@ -130,24 +169,24 @@ export default defineComponent({
     @apply flex justify-between items-center;
   }
 
-  .component-data {
+  .component-table {
     @apply table-auto;
   }
 
-  th {
-    @apply px-4 py-2;
+  .component-header {
+    @apply flex items-center justify-between px-2;
   }
 
-  td {
-    @apply border px-4 py-2;
+  .component-data {
+    @apply border;
   }
 
-  tr:nth-child(2n) {
-    @apply bg-pink-100;
+  tr:nth-child(2n) .component-data {
+    @apply bg-blue-100;
   }
 
   .row-input {
-    @apply bg-transparent;
+    @apply bg-transparent p-2;
   }
 
   .add-row-button {

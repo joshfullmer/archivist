@@ -1,36 +1,28 @@
 <template>
-  <PageHeader @toggle-nav="toggleNav" />
-  <div class="content">
-    <MainNav :open="showNav" />
-
-    <PageMain />
-  </div>
+  MAJOR TODO: USE ROUTE GUARDS FOR LOGGING IN
+  <LoginPage v-if="!isAuthenticated" />
+  <MainPage v-else />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 
-import PageHeader from './components/app/PageHeader.vue'
-import MainNav from './components/app/MainNav.vue'
-import PageMain from './components/app/PageMain.vue'
+import LoginPage from './views/LoginPage.vue'
+import MainPage from './views/MainPage.vue'
+
+import { useAppState } from './state/app.state'
+import { loadLocalStorage } from './utils/localStorage.util'
 
 export default defineComponent({
-  name: 'App',
-  components: { PageHeader, MainNav, PageMain },
+  components: { LoginPage, MainPage },
   setup () {
-    const showNav = ref(true)
-    const toggleNav = () => { showNav.value = !showNav.value }
+    onMounted(() => {
+      loadLocalStorage()
+    // TODO: Add some sort of backend check for valid JWT on mounted
+    })
+    const { isAuthenticated, user } = useAppState()
 
-    return {
-      showNav,
-      toggleNav
-    }
+    return { isAuthenticated, user }
   }
 })
 </script>
-
-<style scoped>
-  .content {
-    @apply flex flex-1 overflow-hidden;
-  }
-</style>

@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "apollo-boost": "^0.4.9",
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "graphql": "^15.3.0",
     "lodash.debounce": "^4.0.8",
+    "lodash.merge": "^4.6.2",
     "quill": "^1.3.7",
     "tailwindcss": "^1.7.3",
     "vue": "^3.0.0-0",
@@ -24,6 +26,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.19",
     "@types/lodash.debounce": "^4.0.6",
+    "@types/lodash.merge": "^4.6.6",
     "@types/quill": "^2.0.3",
     "@typescript-eslint/eslint-plugin": "^3.9.1",
     "@typescript-eslint/parser": "^3.9.1",

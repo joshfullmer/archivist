@@ -13,8 +13,8 @@ export const getChapterById = async (id: string): Promise<Chapter> => {
           title
           epigraph
           content
-          created
-          updated
+          createdAt
+          updatedAt
         }
       }
     `,
@@ -34,8 +34,8 @@ export const createChapter = async ({ bookId, chapter }: { bookId: string, chapt
           title
           epigraph
           content
-          created
-          updated
+          createdAt
+          updatedAt
         }
       }
     `,
@@ -44,8 +44,6 @@ export const createChapter = async ({ bookId, chapter }: { bookId: string, chapt
       chapterPayload: chapter
     }
   })
-
-  console.log(data)
 
   return data.createChapter
 }

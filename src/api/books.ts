@@ -9,8 +9,8 @@ export const getBooks = async (): Promise<Book[]> => {
         books {
           id
           title
-          created
-          updated
+          createdAt
+          updatedAt
         }
       }
     `,
@@ -34,8 +34,8 @@ export const getBookById = async (id: string): Promise<Book> => {
             title
             content
           }
-          created
-          updated
+          createdAt
+          updatedAt
         }
       }
     `,
@@ -55,8 +55,8 @@ export const createBook = async ({ title }: Book): Promise<Book> => {
         createBook(bookPayload: $bookPayload) {
           id
           title
-          created
-          updated
+          createdAt
+          updatedAt
         }
       }
     `,

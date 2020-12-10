@@ -19,7 +19,7 @@ import {
   createComponent,
   updateComponentMutation,
   addComponentFieldMutation,
-  createComponentDataMutation
+  createComponentRecordMutation
 } from './components'
 
 export {
@@ -41,5 +41,5 @@ export {
 
   addComponentFieldMutation,
 
-  createComponentDataMutation
+  createComponentRecordMutation
 }

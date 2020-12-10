@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost'
 import graphql from './graphql'
 import { BookComponent, BookComponentField, FieldType, BookComponentData, Data } from '@/types'
-import { transformBookComponentDtoToBookComponentData } from '@/transformers/components'
+import { BookComponentRecord } from '@/types/components'
 
 export const getComponents = async (): Promise<BookComponent[]> => {
   const { data: { components } } = await graphql.query({
@@ -40,9 +40,12 @@ export const getComponentById = async (id: string): Promise<BookComponent> => {
             type
             options
           }
-          data {
+          records {
             id
-            data
+            name
+            values {
+              data
+            }
           }
           created
           updated
@@ -52,8 +55,6 @@ export const getComponentById = async (id: string): Promise<BookComponent> => {
     variables: { id },
     fetchPolicy: 'no-cache'
   })
-
-  component.data = component.data.map(transformBookComponentDtoToBookComponentData)
 
   return component
 }
@@ -107,7 +108,7 @@ export const addComponentFieldMutation = async ({
   const { data } = await graphql.mutate({
     mutation: gql`
       mutation($componentId: ID!, $componentFieldPayload: ComponentFieldPayload!) {
-        addComponentField(componentId: $componentId, componentFieldPayload: $componentFieldPayload) {
+        createComponentField(componentId: $componentId, componentFieldPayload: $componentFieldPayload) {
           id
           componentId
           name
@@ -128,36 +129,35 @@ export const addComponentFieldMutation = async ({
     }
   })
 
-  return data?.addComponentField
+  return data?.createComponentField
 }
 
-export const createComponentDataMutation = async ({
+export const createComponentRecordMutation = async ({
   componentId,
-  componentData = {}
+  name = ''
 }: {
   componentId: string
-  componentData?: Data
-}): Promise<BookComponentData> => {
-  const dataJson = JSON.stringify(componentData)
+  name?: string
+}): Promise<BookComponentRecord> => {
   const { data } = await graphql.mutate({
     mutation: gql`
-      mutation($componentId: ID!, $data: String) {
-        createComponentData(componentId: $componentId, data: $data) {
+      mutation($componentId: ID!, $name: String) {
+        createComponentRecord(componentId: $componentId, name: $name) {
           id
           componentId
-          data
-          created
-          updated
+          name
+          createdAt
+          updatedAt
         }
       }
     `,
     variables: {
       componentId,
-      data: dataJson
+      name
     }
   })
 
-  return transformBookComponentDtoToBookComponentData(data?.createComponentData)
+  return data?.createComponentRecord
 }
 
 export const updateComponentDataMutation = async ({
@@ -186,5 +186,5 @@ export const updateComponentDataMutation = async ({
     }
   })
 
-  return transformBookComponentDtoToBookComponentData(data?.updateComponentData)
+  return data?.updateComponentData
 }

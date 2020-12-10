@@ -1,10 +1,11 @@
 export type BookComponent = {
   id: string;
+  username: string;
   name: string;
   fields: BookComponentField[]
-  data: BookComponentData[]
-  created: string;
-  updated: string;
+  records: BookComponentRecord[]
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type BookComponentField = {
@@ -13,26 +14,34 @@ export type BookComponentField = {
   name: string;
   type: FieldType;
   options: string[];
-  created: string;
-  updated: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type BookComponentRecord = {
+  id: string;
+  componentId: string;
+  name: string;
+  values: BookComponentData[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type BookComponentData = {
-  id: string
-  componentId: string
-  data: Data
-  created: string
-  updated: string
+  id: string;
+  recordId: string;
+  fieldId: string;
+  data: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type BookComponentDataDto = {
   id: string
   componentId: string
   data: string
-  created: string
-  updated: string
+  createdAt: string
+  updatedAt: string
 }
-
-export type Data = Record<string, string>
 
 export type FieldType = 'text' | 'boolean' | 'select'

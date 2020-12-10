@@ -1,5 +1,5 @@
 <template>
-  <div class="input-field">
+  <fieldset class="input-field">
     <label
       v-if="label"
       :for="label"
@@ -8,10 +8,11 @@
     <input
       :ref="inputField"
       :name="label"
+      :type="type"
       :value="modelValue"
       @input="handleInput"
     >
-  </div>
+  </fieldset>
 </template>
 
 <script lang="ts">
@@ -26,6 +27,10 @@ export default defineComponent({
     modelValue: {
       type: String,
       required: true
+    },
+    type: {
+      type: String,
+      default: 'text'
     }
   },
 
